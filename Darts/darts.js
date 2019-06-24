@@ -249,6 +249,9 @@ function Undo() {
 }
 
 function changePlayer() {
+  if(P1Leg.length == 0 && P2Leg.length == 0){
+    legTurn = !legTurn;
+  }
   Turn = !Turn;
   drawGrid();
   updateScore();
