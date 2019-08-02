@@ -115,11 +115,20 @@ function DrawNumbers(){
   textSize(16);
   fill(255);
   let a = 18;
+  //
   for(let i = 0; i < 20 ; i++){
-    text(str(numb[i]),0,-r - 10);
+    if(i>5 && i<15){
+      push();
+      translate(0,-r - 20);
+      rotate(180);
+      text(str(numb[i]),0,0);
+      pop();
+    }else{
+      text(str(numb[i]),0,-r - 10);
+    }
     rotate(a);
   }
-  
+  //
   textSize(30);
   fill(0);
   text(score,-160,-160);
