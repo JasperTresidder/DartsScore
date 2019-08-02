@@ -20,13 +20,21 @@ P2Curr = 501;
 var P1Score = 0;
 var P2Score = 0;
 
+let score = 0;
+let throws = 0;
+
+let r = 150;
+let numb = [20,1,18,4,13,6,10,15,2,17,3,19,7,16,8,11,14,9,12,5];
+
 const w = 500;
 const h = 600;
+
+
 
 function setup() {
   P1av = float(0.0);
   P2av = float(0.0);
-  createCanvas(w, h);
+  createCanvas(w+400, h);
   background(153, 153, 255);
   drawGrid();
   updateScore();
@@ -40,9 +48,214 @@ function setup() {
   button1 = createButton('Change Turn');
   button1.position(w / 2 - 59 + w / 32, 5 * h / 80);
   button1.mousePressed(changePlayer);
+  
+  
+  buttonx = createButton('Reset');
+  buttonx.position(500+(r)*2, 19);
+  buttonx.mousePressed(ResetScore);
+  
+  
+  DrawBoard();
+  DrawNumbers();
 
 
 }
+
+
+function ResetScore(){
+  score = 0;
+  throws = 0;
+  DrawBoard();
+  DrawNumbers();
+  console.log('ok');
+}
+
+function DrawBoard(){
+  stroke(0);
+  strokeWeight(1);
+  push();
+  translate(700,200);
+  r = r/2;
+  angleMode(DEGREES);
+  fill(51);
+  //outerboard
+  //console.log(r);
+  circle(0,0,(r+r/4)*2);
+  fill(255,0,0);
+  //doubles
+  circle(0,0,r*2);
+  fill(255,255,210);
+  circle(0,0,r*2 - r/10);
+  fill(0,255,0);
+  //triples
+  circle(0,0,r + r/5);
+  fill(255,255,210);
+  circle(0,0,r + r/10);
+  fill(0,255,0);
+  //middle
+  circle(0,0,r/5);
+  fill(255,0,0);
+  circle(0,0,r/10);
+  let a = 360/40;
+  for(let i = 0; i < 20 ; i++){
+    let x = 2*r*cos(a);
+    let y = 2*r*sin(a);
+    line(r*cos(a)/5,r*sin(a)/5,x,y);
+    a += 360/20; 
+  }
+  pop();
+  strokeWeight(0);
+  noStroke();
+}
+
+function DrawNumbers(){
+  push();
+  r = r*2;
+  translate(700,200);
+  textSize(16);
+  fill(255);
+  let a = 18;
+  for(let i = 0; i < 20 ; i++){
+    text(str(numb[i]),0,-r - 10);
+    rotate(a);
+  }
+  
+  textSize(30);
+  fill(0);
+  text(score,-160,-160);
+  pop();
+}
+
+function mouseClicked(){
+  if(throws == 3){
+    score = 0;
+    throws = 0;
+  }
+  
+  //console.log(mouseX-200,mouseY-200);
+  let x = mouseX-700;
+  let y = mouseY-200;
+  let a = atan(y/x);
+  let rad = dist(700,200,mouseX,mouseY);
+  //console.log(abs(a));
+  let index = 0;
+  
+  //Find Index
+  
+  a = abs(a);
+  
+  //Top Left
+  if(x<=0 && y<=0){
+    if(a < 9){
+      index = 15;
+    }
+    if(a>9 && a<27){
+      index = 16;
+    }
+    if(a>27 && a<45){
+      index = 17;
+    }
+    if(a>45 && a<63){
+      index = 18;
+    }
+    if(a>63 && a<81){
+      index = 19;
+    }
+    if(a > 81){
+      index = 0;
+    }
+  }
+  
+  if(x>=0 && y<=0){
+    if(a < 9){
+      index = 5;
+    }
+    if(a>9 && a<27){
+      index = 4;
+    }
+    if(a>27 && a<45){
+      index = 3;
+    }
+    if(a>45 && a<63){
+      index = 2;
+    }
+    if(a>63 && a<81){
+      index = 1;
+    }
+    if(a > 81){
+      index = 0;
+    }
+  }
+  if(x>=0 && y>=0){
+    if(a < 9){
+      index = 5;
+    }
+    if(a>9 && a<27){
+      index = 6;
+    }
+    if(a>27 && a<45){
+      index = 7;
+    }
+    if(a>45 && a<63){
+      index = 8;
+    }
+    if(a>63 && a<81){
+      index = 9;
+    }
+    if(a > 81){
+      index = 10;
+    }
+  }
+  
+  if(x<=0 && y>=0){
+    if(a < 9){
+      index = 15;
+    }
+    if(a>9 && a<27){
+      index = 14;
+    }
+    if(a>27 && a<45){
+      index = 13;
+    }
+    if(a>45 && a<63){
+      index = 12;
+    }
+    if(a>63 && a<81){
+      index = 11;
+    }
+    if(a > 81){
+      index = 10;
+    }
+  }
+  
+  //console.log(index);
+  
+  if(rad < (r + r/5)/2 && rad > (r + r/10)/2){
+    score += 3*numb[index];
+    throws ++;
+  }else if(rad < (r*2)/2 && rad > (r*2 - r/10)/2){
+    score += 2*numb[index];
+    throws ++;
+  }else if(rad < (r*2 - r/10)/2 && rad > (r/5)/2){
+    score += numb[index];
+    throws ++;
+  }else if(rad < (r/5)/2 && rad > (r/10)/2){
+    score += 25;
+    throws ++;
+  }else if(rad < (r/10)/2){
+    score += 50;
+    throws ++;
+  }else if(rad < (r+r/4)){
+    score += 0;
+    throws ++;
+  }
+  drawGrid();
+  updateScore();
+  drawScore();
+  DrawBoard();
+  DrawNumbers();
+}
+
 
 function draw() {
   fill(255, 165, 0);
@@ -104,6 +317,8 @@ function updateScore() {
 
 function Score() {
   drawGrid();
+  DrawBoard();
+  DrawNumbers();
   strokeWeight(4);
   fill(0);
   var value = input.value();
@@ -121,7 +336,9 @@ function Score() {
     P2Leg.push(P2Curr);
     P2allShots.push(value);
   }
-  drawScore()
+  drawScore();
+  //DrawBoard();
+  //DrawNumbers();
   Turn = !Turn;
   if (P1Curr == 0) {
     P1Score = P1Score + 1;
@@ -164,6 +381,8 @@ function redo() {
   P2Curr = 501;
   drawGrid();
   updateScore();
+  //DrawBoard();
+  //DrawNumbers();
 }
 
 function keyTyped() {
@@ -191,6 +410,8 @@ function Undo() {
       drawGrid();
       fill(0);
       drawScore();
+      //DrawBoard();
+      //DrawNumbers();
 
 
       var temp = 0;
@@ -225,6 +446,8 @@ function Undo() {
       drawGrid();
       fill(0);
       drawScore();
+      //DrawBoard();
+      //DrawNumbers();
 
       var temp = 0;
       for (var k = 0; k < P1allShots.length; k++) {
@@ -249,13 +472,12 @@ function Undo() {
 }
 
 function changePlayer() {
-  if(P1Leg.length == 0 && P2Leg.length == 0){
-    legTurn = !legTurn;
-  }
   Turn = !Turn;
   drawGrid();
   updateScore();
   drawScore();
+  //DrawBoard();
+  //DrawNumbers();
 }
 
 function drawScore() {
