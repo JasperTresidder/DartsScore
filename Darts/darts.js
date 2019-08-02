@@ -381,8 +381,8 @@ function redo() {
   P2Curr = 501;
   drawGrid();
   updateScore();
-  //DrawBoard();
-  //DrawNumbers();
+  DrawBoard();
+  DrawNumbers();
 }
 
 function keyTyped() {
@@ -410,8 +410,8 @@ function Undo() {
       drawGrid();
       fill(0);
       drawScore();
-      //DrawBoard();
-      //DrawNumbers();
+      DrawBoard();
+      DrawNumbers();
 
 
       var temp = 0;
@@ -446,8 +446,8 @@ function Undo() {
       drawGrid();
       fill(0);
       drawScore();
-      //DrawBoard();
-      //DrawNumbers();
+      DrawBoard();
+      DrawNumbers();
 
       var temp = 0;
       for (var k = 0; k < P1allShots.length; k++) {
@@ -476,8 +476,8 @@ function changePlayer() {
   drawGrid();
   updateScore();
   drawScore();
-  //DrawBoard();
-  //DrawNumbers();
+  DrawBoard();
+  DrawNumbers();
 }
 
 function drawScore() {
