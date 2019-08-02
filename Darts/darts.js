@@ -36,7 +36,7 @@ function setup() {
   P1av = float(0.0);
   P2av = float(0.0);
   //createCanvas(w+400, h);
-  createCanvas(displayWidth, displayHeight);
+  createCanvas(windowWidth, windowHeight);
   fullscreen(true);
   scale(scaleval);
   background(153, 153, 255);
