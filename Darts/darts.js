@@ -79,7 +79,6 @@ function DrawBoard(){
   angleMode(DEGREES);
   fill(51);
   //outerboard
-  //console.log(r);
   circle(0,0,(r+r/4)*2);
   fill(255,0,0);
   //doubles
@@ -141,12 +140,10 @@ function mouseClicked(){
     throws = 0;
   }
   
-  //console.log(mouseX-200,mouseY-200);
   let x = mouseX-700;
   let y = mouseY-200;
   let a = atan(y/x);
   let rad = dist(700,200,mouseX,mouseY);
-  //console.log(abs(a));
   let index = 0;
   
   //Find Index
