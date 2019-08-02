@@ -1,5 +1,6 @@
-P1 = 'Jasper';
-P2 = 'Titus';
+let scaleval = 1.4;
+P1 = 'Player1';
+P2 = 'Player2';
 
 i = 0;
 j = 0;
@@ -34,28 +35,31 @@ const h = 600;
 function setup() {
   P1av = float(0.0);
   P2av = float(0.0);
-  createCanvas(w+400, h);
+  //createCanvas(w+400, h);
+  createCanvas(displayWidth, displayHeight);
+  fullscreen(true);
+  scale(scaleval);
   background(153, 153, 255);
   drawGrid();
   updateScore();
   textAlign(CENTER);
   input = createInput();
-  input.position(w / 2 - 66, h / 40);
+  input.position((w / 2 - 66)*scaleval, (h / 40)*scaleval);
   button = createButton('Undo');
-  button.position(9 * w / 10, h / 40);
+  button.position((9 * w / 10)*scaleval, scaleval*h / 40);
   button.mousePressed(Undo);
 
   button1 = createButton('Change Turn');
-  button1.position(w / 2 - 59 + w / 32, 5 * h / 80);
+  button1.position((w / 2 - 59 + w / 32)*scaleval, scaleval*5 * h / 80);
   button1.mousePressed(changePlayer);
   
   
   buttonx = createButton('Reset');
-  buttonx.position(500+(r)*2, 19);
+  buttonx.position((500+(r)*2)*scaleval, scaleval*19);
   buttonx.mousePressed(ResetScore);
   
   buttony = createButton('Merge');
-  buttony.position(680,420);
+  buttony.position(scaleval*680,scaleval*420);
   buttony.mousePressed(Merge);
   
   
@@ -146,10 +150,10 @@ function mouseClicked(){
   }
   
   //console.log(mouseX-200,mouseY-200);
-  let x = mouseX-700;
-  let y = mouseY-200;
+  let x = mouseX-(700*scaleval);
+  let y = mouseY-(200*scaleval);
   let a = atan(y/x);
-  let rad = dist(700,200,mouseX,mouseY);
+  let rad = dist((700*scaleval),(200*scaleval),mouseX,mouseY);
   //console.log(abs(a));
   let index = 0;
   
@@ -240,9 +244,9 @@ function mouseClicked(){
       index = 10;
     }
   }
+  r = 150*scaleval;
   
   //console.log(index);
-  
   if(rad < (r + r/5)/2 && rad > (r + r/10)/2){
     score += 3*numb[index];
     throws ++;
@@ -262,6 +266,7 @@ function mouseClicked(){
     score += 0;
     throws ++;
   }
+  r = 150;
   drawGrid();
   updateScore();
   drawScore();
@@ -271,6 +276,7 @@ function mouseClicked(){
 
 
 function draw() {
+  scale(scaleval);
   fill(255, 165, 0);
   if (Turn == true) {
     ellipse(w / 4, h / 6, 7, 7, 0);
@@ -454,7 +460,7 @@ function redo() {
 }
 
 function keyTyped() {
-  if (key === ' ' & int(input.value()) < 181 & int(input.value()) > -1 & isNaN(input.value()) == false) {
+  if ((keyCode == ENTER || key == ' ')& int(input.value()) < 181 & int(input.value()) > -1 & isNaN(input.value()) == false) {
     if (Turn == true & int(input.value()) < P1Curr + 1) {
       Score();
     }
