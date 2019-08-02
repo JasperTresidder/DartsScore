@@ -54,6 +54,10 @@ function setup() {
   buttonx.position(500+(r)*2, 19);
   buttonx.mousePressed(ResetScore);
   
+  buttony = createButton('Merge');
+  buttony.position(680,420);
+  buttony.mousePressed(Merge);
+  
   
   DrawBoard();
   DrawNumbers();
@@ -67,7 +71,7 @@ function ResetScore(){
   throws = 0;
   DrawBoard();
   DrawNumbers();
-  console.log('ok');
+  //console.log('ok');
 }
 
 function DrawBoard(){
@@ -79,6 +83,7 @@ function DrawBoard(){
   angleMode(DEGREES);
   fill(51);
   //outerboard
+  //console.log(r);
   circle(0,0,(r+r/4)*2);
   fill(255,0,0);
   //doubles
@@ -140,10 +145,12 @@ function mouseClicked(){
     throws = 0;
   }
   
+  //console.log(mouseX-200,mouseY-200);
   let x = mouseX-700;
   let y = mouseY-200;
   let a = atan(y/x);
   let rad = dist(700,200,mouseX,mouseY);
+  //console.log(abs(a));
   let index = 0;
   
   //Find Index
@@ -270,6 +277,9 @@ function draw() {
   } else {
     ellipse(3 * w / 4, h / 6, 7, 7, 0);
   }
+  if(P1Curr < 0 || P2Curr < 0 ){
+    Undo();
+  }
 }
 
 function drawGrid() {
@@ -292,6 +302,58 @@ function drawGrid() {
   text('501', 3 * w / 4 - w / 8, 5 * h / 20);
   text('501', w / 4 - w / 8, 5 * h / 20);
 
+}
+
+function Merge(){
+  drawGrid();
+  DrawBoard();
+  DrawNumbers();
+  strokeWeight(4);
+  fill(0);
+  textSize(w / 20);
+  textAlign(CENTER);
+  fill(0);
+
+  if (Turn == true) {
+    P1Curr = P1Curr - score;
+    P1Leg.push(P1Curr);
+    P1allShots.push(score);
+  } else {
+    P2Curr = P2Curr - score;
+    P2Leg.push(P2Curr);
+    P2allShots.push(score);
+  }
+  drawScore();
+  Turn = !Turn;
+  if (P1Curr == 0) {
+    P1Score = P1Score + 1;
+    lastWin = true;
+    redo();
+  }
+  if (P2Curr == 0) {
+    P2Score = P2Score + 1;
+    lastWin = false;
+    redo();
+  }
+  var temp = 0;
+  for (var k = 0; k < P1allShots.length; k++) {
+    temp = temp + int(P1allShots[k]);
+  }
+  P1av = float(temp / P1allShots.length);
+
+  P1av = round(P1av * 100);
+  P1av = P1av / 100;
+
+  temp = 0;
+  for (k = 0; k < P2allShots.length; k++) {
+    temp = temp + int(P2allShots[k]);
+  }
+  P2av = float(temp / P2allShots.length);
+
+  P2av = round(100 * P2av);
+  P2av = P2av / 100;
+  updateScore();
+  ResetScore();
 }
 
 function updateScore() {
