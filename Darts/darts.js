@@ -1,6 +1,4 @@
-let scaleval = 1.4;
-P1 = 'Player1';
-P2 = 'Player2';
+
 
 i = 0;
 j = 0;
@@ -30,13 +28,18 @@ let numb = [20,1,18,4,13,6,10,15,2,17,3,19,7,16,8,11,14,9,12,5];
 const w = 500;
 const h = 600;
 
-
+let P1;
+let P2;
+let scaleval;
 
 function setup() {
+  scaleval = displayWidth/1000;
+  P1 = 'Jasper';
+  P2 = 'Titus';
   P1av = float(0.0);
   P2av = float(0.0);
   //createCanvas(w+400, h);
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(displayWidth, displayHeight);
   fullscreen(true);
   scale(scaleval);
   background(153, 153, 255);
@@ -44,13 +47,14 @@ function setup() {
   updateScore();
   textAlign(CENTER);
   input = createInput();
-  input.position((w / 2 - 66)*scaleval, (h / 40)*scaleval);
+  input.position((w / 2 - 6)*scaleval, (h / 40)*scaleval);
+  input.size(15);
   button = createButton('Undo');
-  button.position((9 * w / 10)*scaleval, scaleval*h / 40);
+  button.position((9 * w / 10)*scaleval, scaleval*5 * h / 80);
   button.mousePressed(Undo);
 
-  button1 = createButton('Change Turn');
-  button1.position((w / 2 - 59 + w / 32)*scaleval, scaleval*5 * h / 80);
+  button1 = createButton('Turn');
+  button1.position((w / 2 - 26 + w / 32)*scaleval, scaleval*5 * h / 80);
   button1.mousePressed(changePlayer);
   
   
