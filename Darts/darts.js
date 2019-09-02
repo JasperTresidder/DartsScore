@@ -471,16 +471,8 @@ function Score() {
   //DrawBoard();
   //DrawNumbers();
   Turn = !Turn;
-  if (P1Curr == 0) {
-    P1Score = P1Score + 1;
-    lastWin = true;
-    redo();
-  }
-  if (P2Curr == 0) {
-    P2Score = P2Score + 1;
-    lastWin = false;
-    redo();
-  }
+  
+  
   var temp = 0;
   for (var k = 0; k < P1allShots.length; k++) {
     temp = temp + int(P1allShots[k]);
@@ -514,6 +506,17 @@ function Score() {
   P1LegAv = float(temp / P1LegS.length);
   P1LegAv = round(100 * P1LegAv);
   P1LegAv = P1LegAv / 100;
+  
+  if (P1Curr == 0) {
+    P1Score = P1Score + 1;
+    lastWin = true;
+    redo();
+  }
+  if (P2Curr == 0) {
+    P2Score = P2Score + 1;
+    lastWin = false;
+    redo();
+  }
 
   updateScore();
 }
